@@ -4,14 +4,14 @@
   "description": "",
   "main": "block.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+     "start": "node index"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bhaskarmelkani/naivechain.git"
   },
   "author": "bhaskarmelkani <melkani.bhaskar@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/bhaskarmelkani/naivechain/issues"
   },

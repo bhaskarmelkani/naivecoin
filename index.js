@@ -3,11 +3,9 @@
 const sockets = [];
 const initialPeers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 
-const BlockChain = require('./blockChain');
-const Socket = require('./websocket');
+const BlockChain = require('./lib/blockChain');
+const Socket = require('./lib/websocket');
 const blockChain = new BlockChain();
 
 const webSocket = new Socket(blockChain, initialPeers);
-const server = require('./server')(blockChain, webSocket)();
-
-
+const server = require('./lib/server')(blockChain, webSocket)();
