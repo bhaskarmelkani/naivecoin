@@ -1,0 +1,19 @@
+{
+  "name": "naivechain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "block.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhaskarmelkani/naivechain.git"
+  },
+  "author": "bhaskarmelkani <melkani.bhaskar@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhaskarmelkani/naivechain/issues"
+  },
+  "homepage": "https://github.com/bhaskarmelkani/naivechain#readme"
+}
