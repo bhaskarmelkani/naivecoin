@@ -7,11 +7,15 @@ class BlockChain {
 
   constructor(){
     this.chain = Object.create(null);
+    const genesisBlock = this.getGenesisBlock();
+    this.chain[genesisBlock.hash] = genesisBlock;
   }
 
   addBlock(newBlock){
     if(this.isNewBlockValid(newBlock)){
       this.chain[newBlock.hash] = newBlock;
+      console.log('-------------block added')
+      console.log(this.chain)
     }
   }
 
@@ -29,18 +33,24 @@ class BlockChain {
     const nextIndex = previousBlock.index + 1;
     const timestamp = new Date().getTime();
 
-    return new Block(nextIndex, previousHash, timestamp, blockData);
+    return new Block(nextIndex, previousBlock.hash, timestamp, blockData);
   }
 
   isNewBlockValid(newBlock){
+    console.log('-------------------validity')
+
+    console.log(calcHashForBlock(newBlock))
+    console.log(newBlock.hash)
+     
     const previousBlock = this.getLatestBlock();
+    const previousHash = previousBlock.hash;
     if( previousBlock.index + 1 !== newBlock.index ){
       console.log('invalid index');
       return false;
-    }else if( previousHash !== newBlock.hash){
+    }else if( previousHash !== newBlock.previousHash){
       console.log('invalid previousHash');
       return false;
-    }else if(calcHashForBlock(newBlock) === newBlock.hash){
+    }else if(calcHashForBlock(newBlock) !== newBlock.hash){
       console.log('Invalid hash for new block')
       return false;
     }

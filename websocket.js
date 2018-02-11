@@ -11,12 +11,15 @@ const {p2pPort} = require('./config');
 const { sortBlocks } = require('./utils');
 
 class Socket{
-  constructor(blockChain, initialPears = []){
+  constructor(blockChain, initialPeers = []){
     this.sockets = [];
-    this.server = new WebSocket({post: p2pPort});
-    this.server.on('connection', ws => initConnection(ws));
+
+    const port = process.env.P2P_PORT || p2pPort;
+    this.server = new WebSocket.Server({port});
+    const that = this;
+    this.server.on('connection', ws => that.initConnection(ws));
     this.blockChain = blockChain;
-    this.connectToPears(initialPears);
+    this.connectToPeers(initialPeers);
   }
 
   initConnection(ws){
@@ -73,16 +76,20 @@ class Socket{
     const latestBlockHeld = this.blockChain.getLatestBlock();
     if(latestBlockRecieved.index > latestBlockHeld.index){
       console.log('blockchain possibly behind. We got: ' + latestBlockHeld.index + ' Peer got: ' + latestReceivedBlock.index);
+
       if(latestBlockHeld.hash === latestReceivedBlock.previousHash){
         console.log("We can append the received block to our chain");
         this.blockChain.addBlock(latestBlockReceived);
         this.broadcast(this.responseLatestMsg());
+
       }else if(receivedBlocks.length === 1){
         console.log("We have to query the chain from our peer");
         this.broadcast(this.queryAllMsg());
+
       }else{
         console.log("Received blockchain is longer than current blockchain");
         this.blockChain.replaceChain(receivedBlocks);
+
       }
     }else{
       console.log('received blockchain is not longer than current blockchain. Do nothing');
@@ -90,7 +97,7 @@ class Socket{
 
   }
 
-  initErrorHandler (ws) => {
+  initErrorHandler (ws){
     const closeConnection = (ws) => {
         console.log('connection failed to peer: ' + ws.url);
         this.sockets.splice(this.sockets.indexOf(ws), 1);
@@ -107,7 +114,7 @@ class Socket{
     return {'type': MessageType.QUERY_ALL}
   }
 
-  connectToPeers(newPears){
+  connectToPeers(newPeers){
     const that = this;
     newPeers.forEach((peer) => {
         var ws = new WebSocket(peer);

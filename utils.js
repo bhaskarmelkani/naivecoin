@@ -41,6 +41,7 @@ const sortBlocks = (blocks) => {
 
 module.exports = {
   calcHash,
+  calcHashForBlock,
   getBlockAtIndex,
   sortBlocks
 }

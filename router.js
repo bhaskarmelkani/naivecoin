@@ -3,24 +3,24 @@
 var Router = require('koa-router');
 var router = new Router();
 
-module.exports = (blockChain) => {
+module.exports = (blockChain, webSocket) => {
 
-  router
-    .get('/blocks', async (ctx, next) =>
-      // ctx.body(JSON.stringify(blockchain))
-    )
+  return router
+    .get('/blocks', async (ctx, next) =>{
+      ctx.body = JSON.stringify(blockChain)
+    })
     .post('/mineBlock', async (ctx, next) => {
-        var newBlock = generateNextBlock(req.body.data);
-        addBlock(newBlock);
-        broadcast(responseLatestMsg());
+        var newBlock = blockChain.generateNextBlock(ctx.request.body.data);
+        blockChain.addBlock(newBlock);
+        webSocket.broadcast(webSocket.responseLatestMsg());
         console.log('block added: ' + JSON.stringify(newBlock));
-        res.body('ok');
+        ctx.body = 'ok';
     })
     .get('/peers', async (ctx, next) => {
-        res.body(sockets.map(s => s._socket.remoteAddress + ':' + s._socket.remotePort));
+        ctx.body = webSocket.sockets.map(s => s._socket.remoteAddress + ':' + s._socket.remotePort);
     })
     .post('/addPeer', async (ctx, next) => {
-        connectToPeers([req.body.peer]);
-        res.body('ok');
+        webSocket.connectToPeers([ctx.request.body.peer]);
+        ctx.body = 'ok';
     });
 };

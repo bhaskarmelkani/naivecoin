@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/bhaskarmelkani/naivechain/issues"
   },
-  "homepage": "https://github.com/bhaskarmelkani/naivechain#readme"
+  "homepage": "https://github.com/bhaskarmelkani/naivechain#readme",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "ws": "^4.0.0"
+  }
 }
