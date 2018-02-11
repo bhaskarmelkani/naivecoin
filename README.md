@@ -17,9 +17,9 @@ Check also [this blog post](https://medium.com/@lhartikk/a-blockchain-in-200-lin
 * No proof-of-work or proof-of-stake: a block can be added to the blockchain without competition
 
 
-![alt tag](naivechain_blockchain.png)
+![alt tag](images/naivechain_blockchain.png)
 
-![alt tag](naivechain_components.png)
+![alt tag](images/naivechain_components.png)
 
 
 ### Quick start
